@@ -1,0 +1,133 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+% \usepackage{geometry}
+
+\usepackage{docmute}
+\usepackage{colortbl}
+\usepackage{wrapfig} % by ww for wrap fig around text
+% \usepackage{booktabs} % for table
+\usepackage{adjustbox} % for table
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+\usepackage{graphicx} 
+\usepackage{wrapfig} 
+\usepackage{amsmath}  
+\usepackage{multirow}
+\usepackage{docmute}
+\usepackage{colortbl}
+\usepackage{wrapfig} % by ww for wrap fig around text
+\usepackage{subcaption}
+% \usepackage{booktabs} % for table
+\usepackage{adjustbox} % for table
+\definecolor{lightblue}{RGB}{46,150,222}
+\hypersetup{colorlinks,breaklinks,citecolor=lightblue}
+
+\def\eg{{\textit{e.g.}}}
+\def\etal{{\textit{et al.}}}
+\def\ie{{\textit{i.e.}}}
+\definecolor{mygray}{gray}{.75}
+\usepackage[svgnames]{xcolor}
+\usepackage[english]{babel}
+% \usepackage{amsthm, amsmath}
+\usepackage[dvipsnames]{xcolor}
+\def\eg{\emph{e.g.}} \def\Eg{\emph{E.g.}}
+\def\ie{\emph{i.e.}} \def\Ie{\emph{I.e.}}
+\def\cf{\emph{c.f.}} \def\Cf{\emph{C.f.}}
+\def\etc{\emph{etc.}} \def\vs{\emph{vs.}}
+\def\wrt{w.r.t.} \def\dof{d.o.f.}
+\def\etal{\emph{et al.}}
+\title{LuSh-NeRF Rebuttal}
+
+\definecolor{remark}{rgb}{1,.5,0} 
+\definecolor{citecolor}{rgb}{0,0.443,0.737} 
+\definecolor{linkcolor}{rgb}{0.956,0.298,0.235} 
+\definecolor{gray}{gray}{0.5}
+\definecolor{cyan}{rgb}{0.831,0.901,0.945}
+\definecolor{teal}{rgb}{0,0.5,0.5}
+\definecolor{lightskyblue}{rgb}{0.53,0.8,0.976}
+\definecolor{Gray}{gray}{0.85}
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+
+\definecolor{myred}{RGB}{237, 101, 58}
+\newcommand{\red}[1]{\textbf{\textcolor{myred}{#1}}}
+\definecolor{mygreen}{RGB}{92, 175, 58}
+\newcommand{\green}[1]{\textbf{\textcolor{mygreen}{#1}}}
+\definecolor{myblue}{RGB}{103, 177, 225}
+\newcommand{\blue}[1]{\textbf{\textcolor{myblue}{#1}}}
+\definecolor{myyellow}{RGB}{204, 153, 0}
+\newcommand{\yellow}[1]{\textbf{\textcolor{myyellow}{#1}}}
+
+\newcommand{\rebuttal}[1]{{#1}}
+
+\newcolumntype{a}{>{\columncolor{Gray}}c}
+
+\newif\ifShortQuestion
+\ShortQuestiontrue
+% \ShortQuestionfalse
+\ifShortQuestion
+    \newcommand{\question}[3]{\noindent \textbf{{#1}.\ }{\color{black}``{#2}''}}
+\else
+    \newcommand{\question}[3]{\noindent \textbf{{#1}.\ }{\color{black}``{#3}''}}
+\fi
+\newcommand{\answer}[1]{\noindent \textbf{A:} \textcolor{black}{#1}}
+% \newcolumntype{a}{>{\columncolor{lightgray}}Y}
+
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref,breaklinks,colorlinks,bookmarks=false]{hyperref}
+
+% Support for easy cross-referencing
+\usepackage[capitalize]{cleveref}
+\crefname{section}{Sec.}{Secs.}
+\Crefname{section}{Section}{Sections}
+\Crefname{table}{Table}{Tables}
+\crefname{table}{Tab.}{Tabs.}
+
+\begin{document}
+
+\maketitle
+
+\noindent \textbf{-----------------------Response to Reviewer 4gW7(\red{R1})-----------------------}
+
+\question{\red{Q1}}{Ablation Studies.}{The ablations would be more convincing with some quantitative results to back up the qualitative results. }
+
+\answer{Thanks for your valuable suggestion. We have conducted detailed ablation studies on all the synthetic scene in the following table and added the following analysis:
+(1) Upon analyzing Line 1 and 2, it is evident that the ScaleUp preprocessing enhances the NeRF's reconstruction capabilities, resulting in an improved image. (2) Comparing Line 3 and 4, it is evident that CTP leverages frequency domain information to refine Blur Kernel predictions, boosting the perceptual quality of reconstructed images. However, this process  diminishes PSNR and SSIM results due to neglecting image noise interference. (3) Comparing Line 2 with Line 5 underscores the SND module's effectiveness in disentangling scene information from noise, leading to substantial improvements in PSNR and SSIM metrics. (4) The combined application of SND and CTP modules, as demonstrated in Lines 4, 5, and 8, enhances image perceptual quality and outperforms the sole use of CTP in terms of PSNR and SSIM metrics. (5) From Line 7, 8, it can be concluded that decoupling the noise in the scene first, and then modeling the scene blur is a more robust restoration order, which can effectively reduce the interference of noise in the deblurring process, and obtain better performance metrics. 
+The full ablation study results and the analysis on the synthetic dataset will be complemented in the final submission version.
+%
+}
+
+\begin{table}[h]
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{c|ccc|ccc|ccc|ccc|ccc|ccc}
+\hline
+\multirow{2}{*}{Scene}                  & \multicolumn{3}{c|}{"Dorm"} & \multicolumn{3}{c|}{"Poster"} & \multicolumn{3}{c|}{"Plane"} & \multicolumn{3}{c|}{"Sakura"} & \multicolumn{3}{c|}{"Hall"} & \multicolumn{3}{c}{Average} \\ \cline{2-19} 
+                                        & PSNR    & SSIM    & LPIPS   & PSNR    & SSIM     & LPIPS    & PSNR    & SSIM     & LPIPS   & PSNR    & SSIM     & LPIPS    & PSNR    & SSIM    & LPIPS   & PSNR    & SSIM    & LPIPS   \\ \hline
+NeRF                                    & 6.02    & 0.0307  & 0.8030  & 11.25   & 0.5159   & 0.4061   & 5.53    & 0.0716   & 0.8418  & 7.54    & 0.0553   & 0.7186   & 8.19    & 0.1679  & 0.5048  & 7.71   & 0.1683 & 0.6549 \\
+Preprocess+NeRF                         & 19.09   & 0.5453  & 0.4675  & 19.07   & 0.7048   & 0.3088   & 19.66   & 0.523    & 0.4986  & 18.73   & 0.5699   & 0.3666   & 21.34   & 0.6683  & 0.3124  & 19.58  & 0.6023 & 0.3908 \\
+Preprocess+Rigid Blur Kernel                  & 18.89   & 0.5259  & 0.4353  & 17.23   & 0.5900   & 0.2805   & 19.13   & 0.5193   & 0.4185  & 18.23   & 0.5482   & 0.2789   & 20.43   & 0.6353  & 0.2684  & 18.78  & 0.5637 & 0.3363 \\
+Preprocess+CTP                          & 18.52   & 0.5205  & 0.3654  & 17.02   & 0.5915   & 0.2415   & 19.32   & 0.5144   & 0.4048  & 18.27   & 0.5514   & 0.2715   & 20.25   & 0.6411  & 0.2577  & 18.68  & 0.5638 & 0.3082 \\
+Preprocess+SND                          & 20.18   & 0.5646  & 0.4390  & 20.94   & 0.7385   & 0.2811   & 20.13   & 0.5665   & 0.4873  & 19.16   & 0.5889   & 0.3568   & 21.67   & 0.7326  & 0.2801  & 20.42  & 0.6382 & 0.3689 \\
+Preprocess+Rigid Blur Kernel+SND              & 18.99   & 0.5299  & 0.3630  & 18.05   & 0.6179   & 0.2598   & 18.93   & 0.5191   & 0.3954  & 18.65   & 0.5530   & 0.2752   & 20.74   & 0.6381  & 0.2434  & 19.07  & 0.5716  & 0.3074 \\
+LuSh-NeRF (Sharp -\textgreater Denoise) & 18.66   & 0.5008  & 0.3514  & 17.38   & 0.586    & 0.2600   & 19.13   & 0.5213   & 0.4076  & 18.24   & 0.5420   & 0.2589   & 20.72   & 0.6386  & 0.2667  & 18.83 & 0.5577 & 0.3089 \\
+LuSh-NeRF (Denoise -\textgreater Sharp) & 19.06   & 0.5354  & 0.3491  & 18.12   & 0.6331   & 0.2265   & 19.34   & 0.5275   & 0.3852  & 18.94   & 0.5884   & 0.2562   & 21.09   & 0.6421  & 0.2400  & 19.31   & 0.5853  & 0.2914  \\ \hline
+\end{tabular}%
+}
+\vspace{1mm}
+\caption{Ablation Studies of different modules in our proposed LuSh-NeRF.
+% (*** Give a reference. If this is our dataset, we should say "our synthesized dataset". ***)}.
+%Note that LEDNet~\cite{zhou2022lednet} is trained on \rynq{the LOL-Blur dataset~\cite{zhou2022lednet} (*** Give a reference. ***)}, where our simulation data is derived from.
+The \textbf{best} and the \underline{second} performances of each scenario are marked in the table. }\label{tab:mainResults}
+\end{table}
