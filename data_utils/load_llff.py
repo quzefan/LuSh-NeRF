@@ -106,42 +106,34 @@ def _load_data(basedir, factor=None, width=None, height=None, load_imgs=True, ga
     print('Loaded image data', imgs.shape, poses[:, -1, 0])
     return poses, bds, imgs
 
-def process_images_with_clahe(input_dir, output_dir, gamma, clahe_value):  
-    # 创建一个CLAHE对象  
+def process_images_with_clahe(input_dir, output_dir, gamma, clahe_value):    
     clahe = cv2.createCLAHE(clipLimit=clahe_value, tileGridSize=(1, 1))  
-      
-    # 遍历输入文件夹中的所有文件  
+        
     for filename in os.listdir(input_dir):  
-        if filename.endswith('.jpg') or filename.endswith('.png'):  # 可以根据需要添加更多格式  
-            # 构建输入和输出文件的完整路径  
+        if filename.endswith('.jpg') or filename.endswith('.png'):   
+             
             input_path = os.path.join(input_dir, filename)  
             output_path = os.path.join(output_dir, filename)  
-              
-            # 读取图像  
+                
             image = cv2.imread(input_path)  
             
             hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)  
-        
-            # 应用直方图均衡化  
+          
             h, s, v = cv2.split(hsv_image)
-            # 应用CLAHE到亮度通道
+
             if clahe_value > 0:  
                 v_equalized = clahe.apply(v)
             else:
                 v_equalized = v
-            # 合并通道  
+  
             enhanced_image = cv2.merge([h, s, v_equalized])   
             image = cv2.cvtColor(enhanced_image, cv2.COLOR_HSV2BGR)
             
-            # 将图像数组转换为浮点型以进行数学运算  
             img_array = image.astype('float')  
-            # 应用gamma校正  
-            img_array_gamma_corrected = np.power(img_array / 255.0, gamma) * 255.0  
-            # 限制像素值范围在0-255之间  
-            img_array_gamma_corrected = np.clip(img_array_gamma_corrected, 0, 255)  
-            # 将浮点型数组转回uint8类型  
-            image = img_array_gamma_corrected.astype('uint8')  
-            # 将NumPy数组转回PIL图像  
+
+            img_array_gamma_corrected = np.power(img_array / 255.0, gamma) * 255.0    
+            img_array_gamma_corrected = np.clip(img_array_gamma_corrected, 0, 255)   
+            image = img_array_gamma_corrected.astype('uint8')    
             # image = Image.fromarray(img_array_gamma_corrected, 'RGB')
             
              
