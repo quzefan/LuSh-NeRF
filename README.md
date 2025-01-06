@@ -1,5 +1,5 @@
 # LuSh-NeRF
-[NeurIPS 2024] The official implementation of the Paper: "LuSh-NeRF: Lighting up and Sharpening NeRFs for Low-light Scenes"
+[NeurIPS 2024] The official implementation of the Paper: ["LuSh-NeRF: Lighting up and Sharpening NeRFs for Low-light Scenes"](https://arxiv.org/abs/2411.06757)
 
 ## ⚙️ Setup
 
