@@ -493,7 +493,7 @@ def train():
             dummy_poses = torch.eye(3, 4).unsqueeze(0).expand(dummy_num, 3, 4).type_as(render_poses)
             print(f"Append {dummy_num} # of poses to fill all the GPUs")
             nerf.eval()
-            rgbshdr, disps = nerf(
+            rgbshdr, disps, _ = nerf(
                 hwf[0], hwf[1], K, args.chunk,
                 poses=torch.cat([render_poses, dummy_poses], dim=0),
                 render_kwargs=render_kwargs_test,
